@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Promisify setTimeout</title>
+</head>
+<body>
+	<h1>Did the promise finish?</h1>
+	<div class="completion">Not yet</div>
+	<script>
+		//create the wait function 
+		function wait(ms) {
+			//create a new promise 
+			return new Promise(function(resolve) 
+			{
+				//log the scope of the promise
+				console.log(this);
+				//call the reslove callback when setTimeout finishes 
+				window.setTimeout(function() 
+				{
+					resolve();
+				}, ms);
+			});
+		};
+		
+		// set the wait time
+		var milliseconds = 2000;
+		//call wait() then if/when reslove is called execute finish()
+		wait(milliseconds).then(finish);
+
+		function finish() {
+			var completion = document.querySelector('.completion');
+			completion.innerHTML = "Complete after " + milliseconds + "ms.";
+		};
+	</script>
+</body>
+</html>
